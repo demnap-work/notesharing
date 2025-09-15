@@ -1,0 +1,76 @@
+{
+	"RC": 0,
+	"GWITMI0080": {
+		"istanze": {
+			"0": {
+				"device": "GWAPI",
+				"ipv4addr": "eth0:172.16.3.197",
+				"temp": "53000 sysup:10830",
+				"lasttick": 1593437932
+			}
+		},
+		"FS": 0,
+		"IP": "172.16.3.197",
+		"lasttick": 1593437932
+	},
+	"CPS4300008": {
+		"istanze": {
+			"0": {
+				"temp": "54768 sysup:3916",
+				"ver": "4000",
+				"device": "NewCobra",
+				"ipv4addr": "ppp0:10.0.5.1",
+				"lasttick": 1593441167
+			},
+			"20": {
+				"device": "UsbKeyMon",
+				"ipv4addr": "ppp0:10.0.5.1",
+				"ver": "4000",
+				"status": "communication begin",
+				"lasttick": 1593441167
+			},
+			"10": {
+				"temp": "55306 sysup:3926",
+				"ver": "6000",
+				"device": "serialbar",
+				"ipv4addr": "eth0:172.16.3.195",
+				"bargun": "",
+				"bargun-modelid": "",
+				"lasttick": 1593441177
+			}
+		},
+		"FS": 1,
+		"IP": "172.16.3.195",
+		"lasttick": 1593441177
+	},
+	"CPS31210": {
+		"istanze": {
+			"0": {
+				"temp": "55306 sysup:27366",
+				"ver": "4000",
+				"device": "AB321",
+				"ipv4addr": "eth0:172.16.3.190",
+				"lasttick": 1593441178
+			},
+			"20": {
+				"device": "UsbKeyMon",
+				"ipv4addr": "ppp0:10.0.5.1",
+				"ver": "4000",
+				"status": "communication begin",
+				"lasttick": 1593441160
+			},
+			"10": {
+				"temp": "54230 casetemp:39870 sysup:27374",
+				"ver": "6000",
+				"device": "OpticonNLV-3101",
+				"ipv4addr": "eth0:172.16.3.190",
+				"bargun": "Prolific_Technology_Inc._USB-Serial_Controller_D",
+				"bargun-modelid": "2303",
+				"lasttick": 1593441185
+			}
+		},
+		"FS": 1,
+		"IP": "172.16.3.190",
+		"lasttick": 1593441185
+	}
+}

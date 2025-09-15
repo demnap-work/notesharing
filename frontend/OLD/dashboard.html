@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="it">
+   <head>
+      <title>Monitor CPS</title>
+      <link rel="icon" href="img/favicon.ico" />
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <script src="js/tp/jquery.min.js"></script>
+      
+      <script src="js/tp/bootstrap.min.js"></script>
+      <script src="js/tp/angular.min.js"></script>
+      <script src="js/tp/angular-route.js"></script>
+      <script src="js/tp/angular-ui-router.js"></script>
+      <script src="js/tp/jquery.dataTables.min.js"></script>
+
+      <script src="js/tp/hightchart_v6.0.7/highcharts.js"></script>
+	   <script src="js/tp/hightchart_v6.0.7/highcharts-more.js"></script>
+
+
+      <script src="js/main.js"></script>
+      <script src="js/bundle/bundle.js"></script>
+      <script src="js/bundle/bundleRequest.js"></script>
+
+      <script src="js/factories/queryFactory.js"></script>
+      <script src="js/factories/utilitiesFactory.js"></script>
+      <script src="js/factories/HTTPFactory.js"></script>
+
+      <script src="js/controller/cpsController.js"></script>
+      <script src="js/bootstrap-toggle.min.js"></script>
+
+      <script src="js/popper.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      
+      <link rel="stylesheet" href="css/bootstrap.min.css">
+      <link rel="stylesheet" href="css/datatables.min.css">
+      
+
+
+	   <link rel="stylesheet" href="css/buttons.dataTables.min.css">
+      <link href="css/bootstrap-toggle.min.css" rel="stylesheet">
+      
+      <link rel="stylesheet" href="css/style.css">
+
+   </head>
+   
+   <body ng-app="mainApp" ng-controller="cpsController" ng-init="init()">
+     <nav class="navbar navbar-expand-md custom-navbar navbar-dark">
+         <a class="navbar-brand" href="#"> <img width="150" src="img/logo.png" alt="par-tec"> </a>
+            <div>
+            Benvenuto, ti sei connesso come<br/>
+            user: <span id="nomeUser">partec</span> 
+            </div>
+            <div class="alignRightMenu">
+               <ul class="navbar-nav ml-auto ">
+                  <li class="nav-item">
+                     <a class="nav-link linkCPS linkNavBar" ng-click="rebootTurnOff('riavviare')" href="#">Riavvia</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link linkCPS linkNavBar" ng-click="rebootTurnOff('spegnere')" href="#">Spegni</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link linkCPS linkNavBar" href="#" ng-click="logout()">Esci</a>
+                  </li>
+               </ul>
+            </div>  
+      </nav>
+
+
+
+      <div class="container-fluid" style="margin-top:30px" >
+         <div id="container_body_application_alert"></div>
+         <!-- Modal -->
+         <div class="modal fade" id="modalLIstaIstanze" role="dialog">
+            <div class="modal-dialog">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <h4 class="modal-title">Lista istanze <span id="titleListIstanzeModal"></span> </h4>
+                     <!--
+                     <button type="button" id="closeModalFileCPS_CROSS" class="close" data-dismiss="modal">&times;</button> 
+                     -->
+                  </div>
+                  <div class="modal-body" id="containerIstanzeCPS">
+                     <table id="containerListIstanze" class="ui celled table" cellspacing="0" width="100%">
+                        <thead class="">
+                           <tr>
+                              <th>Data ora</th>
+                              <th>Istanza</th>
+                              <th>Attributo</th>
+                              <th>Valore</th>
+                           </tr>
+                        </thead>
+                        <tbody id="containerListIstanzeBody" class=""></tbody>
+                     </table>
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" class="btn" ng-click="chiudiListaIstanza()" data-dismiss="modal">Chiudi</button>
+                  </div>
+                  
+               </div>
+               
+            </div>
+         </div>
+
+
+         <!-- Modal rebbot turn off macchina-->
+         <div class="modal fade" id="modalAlertReboot" role="dialog">
+            <div class="modal-dialog">
+               <!-- Modal content-->
+               <div class="modal-content">
+                  <div class="modal-body">
+                     <h4>Attenzione</h4>
+                     <p>stai per <span id="rebootTurnOffTitle"></span> la macchina, vuoi continuare?</p>
+                     <hr/>
+                     <button type="button" class="btn btn-danger float-left" data-dismiss="modal">Chiudi</button>
+                     <button type="button" class="btn btn-success float-right" ng-click="executeTurnOff()">Conferma</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+         
+         
+         <!-- Modal rebbot turn off macchina-->
+         <div class="modal fade" id="modalDownloadFile" role="dialog">
+            <div class="modal-dialog">
+               <!-- Modal content-->
+               <div class="modal-content">
+                  <div class="modal-body">
+                     <h4>Download file</h4>
+                     <a href="" id="downlaodFileLink"></a>
+                     <hr/>
+                     <button type="button" class="btn btn-danger float-left" data-dismiss="modal">Chiudi</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- Modal -->
+         <div class="modal fade" id="modalAlertUploadModel" role="dialog">
+            <div class="modal-dialog">
+               <!-- Modal content-->
+               <div class="modal-content">
+                  <div class="modal-body">
+                     <h4>Attenzione</h4>
+                     <p>stai per caricare il programma <b id="programmaUploadName"></b> su tutti i modelli <b id="nomeModelloUpload"></b></p>
+                     <hr/>
+                     <button type="button" class="btn btn-danger float-left" data-dismiss="modal">Chiudi</button>
+                     <button type="button" class="btn btn-success float-right" ng-click="uploadModel()">Conferma</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <!-- Modal -->
+         <div class="modal fade" id="modalUploadFilel" role="dialog">
+            <div class="modal-dialog">
+            
+               <!-- Modal content-->
+               <div class="modal-content">
+                
+                  <div class="modal-body">
+                     <p>Stai per caricare un <b id="typeFileTitle"></b></p>
+                     <div class="custom-file mb-3">
+                        <input type="file" class="custom-file-input" id="customFile" name="filename">
+                        <label class="custom-file-label" for="customFile">Scegli file</label>
+                     </div>
+                     <div id="contentFile" typeFile="" contentFile="" nomeFile="" style="display:none;"></div>
+                     <hr/>
+                     <button type="button" class="btn btn-danger float-left" data-dismiss="modal">Chiudi</button>
+                     <button type="button" class="btn btn-success float-right" ng-click="caricaFile()">Carica file</button>
+                  </div>
+                  
+               </div>
+               
+            </div>
+         </div>
+  
+          <!-- Modal -->
+         <div class="modal fade" id="modalAlertDeleteModel" typeFile="" role="dialog">
+            <div class="modal-dialog">
+            
+               <!-- Modal content-->
+               <div class="modal-content">
+                
+                  <div class="modal-body">
+                     <h4>Attenzione</h4>
+
+
+                     <p>stai per eliminare il file <b id="nomeFileDelete"></b> </p>
+                     <hr/>
+                     <button type="button" class="btn btn-danger float-left" data-dismiss="modal">Chiudi</button>
+                     <button type="button" class="btn btn-success float-right" ng-click="deleteFilestore()">Conferma</button>
+                  </div>
+                  
+               </div>
+               
+            </div>
+         </div>
+
+         <!-- Modal -->
+         <div class="modal fade" id="modalRedirect" role="dialog">
+            <div class="modal-dialog">
+            
+               <!-- Modal content-->
+               <div class="modal-content">
+                
+                  <div class="modal-body">
+                     <h4>Attenzione</h4>
+                     Non hai i privilegi per effettuare questa operazione.
+                     <hr/>
+                     <button type="button" class="btn float-right" ng-click="redirectLogin()"  data-dismiss="modal">Chiudi</button>
+                  </div>
+                  
+               </div>
+               
+            </div>
+         </div>
+
+
+         <div class="modal fade" id="modalFIleCPS" role="dialog">
+            <div class="modal-dialog modal-lg" id="modalConainerFIleCPS">
+               <div class="modal-content">
+               <div class="modal-header">
+                  <h4 class="modal-title">File CPS <span id="titleCPSModal"></span> </h4>
+               </div>
+               <div class="modal-body" id="bodyModalFileCPS">
+                  <table id="containerListFileCPS" class="ui celled table" cellspacing="0" width="100%">
+                     <thead class="">
+                        <tr>
+                           <th class="no-sort">Operazioni</th>
+                           <th>Nome</th>
+                           <th>Ultimo accesso</th>
+                           <th>Ultima modifica</th>
+                           <th>Creazione</th>
+                           <th>Dimensione</th>
+                        </tr>
+                     </thead>
+                     <tbody id="containerListFileCPSBody" class=""></tbody>
+                  </table>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn" id="closeModalFIleCPS" data-dismiss="modal">Chiudi</button>
+
+               </div>
+            </div>
+               
+            </div>
+         </div>
+
+
+         <!-- Modal -->
+         <div class="modal fade" id="modalCpsLog" role="dialog">
+            <div class="modal-dialog modal-lg" id="modalContainerCpsLog">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <h4 class="modal-title">Log CPS <span id="titleCPSModalLog"></span> </h4>
+                  </div>
+                  <div class="modal-body backGroundColorBlack" id="bodyModalFileCPSLog">
+                     <dl id="listLogCpsMeggage"></dl> 
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" class="btn" id="closeModalCpsLog" data-dismiss="modal">Chiudi</button>
+
+                  </div>
+               </div>
+               
+            </div>
+         </div>
+
+<!--
+
+
+         <div class="row">
+            <div class="col-sm-2">
+               <div class="card cardSHadowRecap" id="cardRecapNumCPS">
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="col-12 minHeigh45px">
+                           <h5 class="text-muted">CPS <span id="numeoCPS_recap"></span></h5>
+                        </div>
+                     </div>
+
+                  </div> 
+               </div>  
+            </div>
+
+            <div class="col-sm-2">
+               <div class="card cardSHadowRecap" id="cardRecapNumCPSDisp">
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="col-12 minHeigh45px">
+                           <h6 class="text-muted">FS disponibili <span id="fsdisp_recap"></span></h6>
+                           <h6 class="text-muted">FS non disponibili <span id="fsNodisp_recap"></span></h6>
+                        </div>
+                     </div>
+
+                  </div> 
+               </div>  
+            </div>
+
+            <div class="col-sm-2">
+               <div class="card cardSHadowRecap" id="cardRecapNumIstanze">
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="col-12 minHeigh45px">
+                           <h5 class="text-muted">Istanze <span id="numeoIstanze_recap"></span></h5>
+
+                        </div>
+                     </div>
+                  </div> 
+               </div>  
+            </div>
+
+            <div class="col-sm-3">
+               <div class="card cardSHadowRecap" id="cardRecapNumProgrammi">
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="col-12 minHeigh45px">
+                           <h5 class="text-muted">Programmi <span id="numeoProgrammi_recap"></span></h5>
+                        </div>
+                     </div>
+                  </div> 
+               </div>  
+            </div>
+
+            <div class="col-sm-3">
+               <div class="card cardSHadowRecap" id="cardRecapNumFilestore">
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="col-12 minHeigh45px">
+                           <h5 class="text-muted">Filestore <span id="numeoFilestore_recap"></span></h5>
+                        </div>
+                     </div>
+                  </div> 
+               </div>  
+            </div>
+
+         </div>
+
+-->
+         <p></p>
+
+         <div class="row">
+            <div class="col-sm-4">
+               <div class="card cardSHadow" id="widgetStatoCPS">
+                  <div class="card-header headerWidgetColor">
+                     <span class="titleHeaderWid">Stato CPS</span>
+                     <div class="float-right">
+                        <img width="20" class="cursorPointer" data-toggle="tooltip" title="Aggiorna"  ng-click="refresh('cps')" src="img/refresh.png"></img>
+                     </div>
+                  </div>
+                  <div class="card-body cardBodyHeight height452px">
+                     <table id="containerStatoCPS" class="ui celled table" cellspacing="0" width="100%">
+                        <thead class="">
+                        <!--
+
+                           <tr>
+                              <th>IP</th>
+                              <th>CPS</th>
+                              <th>FS</th>
+                              <th>Last tick</th>
+                              <th>Istanze</th>
+                              <th>Stato</th>
+                           </tr>
+                        -->
+                        <tr>
+                              <th>IP</th>
+                              <th>CPS</th>
+                              <th>Last tick</th>
+                              <th width="100">Stato</th>
+                           </tr>
+                        </thead>
+                        <tbody id="containerStatoCPSBody" class=""></tbody>
+                     </table>
+                  </div> 
+                  <div class="card-footer" id="footer_statoCPS">
+                  
+                  </div>
+               </div>    
+            </div>
+
+            <div class="col-sm-8">
+
+
+
+
+
+
+         <div class="row">
+            <div class="col-sm-3">
+               <div class="card cardSHadowRecap" id="cardRecapNumCPS">
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="col-12 minHeigh20px">
+                           <h5 class="text-muted">CPS <span id="numeoCPS_recap"></span></h5>
+                        </div>
+                     </div>
+
+                  </div> 
+               </div>  
+            </div>
+            <!--
+
+            <div class="col-sm-3">
+               <div class="card cardSHadowRecap" id="cardRecapNumCPSDisp">
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="col-12 minHeigh45px">
+                           <h6 class="text-muted">FS disponibili <span id="fsdisp_recap"></span></h6>
+                           <h6 class="text-muted">FS non disponibili <span id="fsNodisp_recap"></span></h6>
+                        </div>
+                     </div>
+
+                  </div> 
+               </div>  
+            </div>
+            -->
+
+            <div class="col-sm-3">
+               <div class="card cardSHadowRecap" id="cardRecapNumIstanze">
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="col-12 minHeigh20px">
+                           <h5 class="text-muted">Istanze <span id="numeoIstanze_recap"></span></h5>
+
+                        </div>
+                     </div>
+                  </div> 
+               </div>  
+            </div>
+
+            <div class="col-sm-3">
+               <div class="card cardSHadowRecap" id="cardRecapNumProgrammi">
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="col-12 minHeigh20px">
+                           <h5 class="text-muted">Programmi <span id="numeoProgrammi_recap"></span></h5>
+                        </div>
+                     </div>
+                  </div> 
+               </div>  
+            </div>
+
+            <div class="col-sm-3">
+               <div class="card cardSHadowRecap" id="cardRecapNumFilestore">
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="col-12 minHeigh20px">
+                        <!--
+                           <h5 class="text-muted">Barcode <span id="numeoFilestore_recap"></span></h5>
+                        -->
+                           <h5 class="text-muted">Barcode <span id="numeoBarcode_recap"></span></h5>
+                        </div>
+                     </div>
+                  </div> 
+               </div>  
+            </div>
+
+         </div>
+
+
+         <p></p>
+
+               <div class="card cardSHadow" id="widgetListProgrammi">
+                  <div class="card-header headerWidgetColor">
+                     <div class="panel-heading adjustHeaderPanel float-left">
+                        <div class="panel-title">
+                           <ul class="nav nav-tabs" id="containerTabFile">
+                              <li class="active" ><a href="#listProgrammiTable" typeFile="PRGSTORE" ng-click="adjustTableProgrammi()" data-toggle="tab">Lista programmi</a></li>
+                              <li><a href="#listFilestoreTable" data-toggle="tab" typeFile="FILESTORE" ng-click="adjustTableFilestore()">Dati macchina</a></li>
+                              <li><a href="#listBarcodeTable" data-toggle="tab" typeFile="BARSTORE" ng-click="adjustTableBarcode()">List Barcode</a></li>
+                           </ul>
+                        </div>
+                     </div>
+                     <div class="float-right">
+                        <img width="20" class="cursorPointer" id="iconUploadFile" ng-click="uploadFile()" data-toggle="tooltip" title="Carica file" src="img/upload.png"></img>
+                        <img width="20" class="cursorPointer" ng-click="refresh('programmi')" data-toggle="tooltip" title="Aggiorna" src="img/refresh.png"></img>
+                     </div>
+                        
+                  </div>
+                  <div class="card-body cardBodyHeight">
+
+                     <div class="panel-body">
+
+                        <div class="tab-content ">
+                           
+                           <div class="tab-pane active" id="listProgrammiTable">
+                               <table id="containerListProgrammi" class="ui celled table" cellspacing="0" width="100%">
+                                 <thead class="">
+                                    <tr>
+                                       <th class="no-sort">Operazioni</th>
+                                       <th>Nome file</th>
+                                       <th>Ultimo accesso</th>
+                                       <th>Ultima modifica</th>
+                                       <th>Dimensione</th>
+                                       <th>Modello</th>
+                                       <th>Commento</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody id="containerListProgrammiBody" class=""></tbody>
+                              </table>
+                           </div>
+                           <div class="tab-pane" id="listFilestoreTable">
+                               <table id="containerListFilestore" class="ui celled table" cellspacing="0" width="100%">
+                                 <thead class="">
+                                    <tr>
+                                       <th class="no-sort">Operazioni</th>
+                                       <th>Nome file</th>
+                                       <th>Ultimo accesso</th>
+                                       <th>Ultima modifica</th>
+                                       <th>Creazione</th>
+                                       <th>Dimensione</th>
+                                       <th>Sorgente</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody id="containerListFilestoreBody" class=""></tbody>
+                              </table>
+                           </div>
+                           <div class="tab-pane" id="listBarcodeTable">
+                               <table id="containerBarcode" class="ui celled table" cellspacing="0" width="100%">
+                                 <thead class="">
+                                    <tr>
+                                       <th class="no-sort">Operazioni</th>
+                                       <th>Nome file</th>
+                                       <th>Ultimo accesso</th>
+                                       <th>Ultima modifica</th>
+                                       <th>Creazione</th>
+                                       <th>Dimensione</th>
+                                       <th>Sorgente</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody id="containerBarcodeBody" class=""></tbody>
+                              </table>
+                           </div>
+                        </div>
+                     </div>
+
+
+                    
+                  </div> 
+                  <div class="card-footer" id="footer_listProgrammi"></div>
+                  <div class="card-footer" id="footer_listFilestore"></div>
+                  <div class="card-footer" id="footer_listBarcode"></div>
+               </div>    
+            </div>
+              
+         </div>
+      </div>
+      <hr/>
+  
+      <footer id="footer" class="footer bg-dark text-white padding25-0 borderTopSeparBody">
+         <!-- FOOT NAVIGATION -->
+         <div class="container">
+            <div class="text-right">Copyright &copy Par-Tec spa <br/>version: {{version}}</div>
+         </div>
+         <!-- //FOOT NAVIGATION -->
+         <div style="display:block;" id="urlFiletoDownload"></div>
+      </footer>
+      
+   </body>
+</html>

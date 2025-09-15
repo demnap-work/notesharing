@@ -1,0 +1,370 @@
+/* palette color blue*/
+/* #337AB7 */
+/* #6B95B9 */
+/* #3072AB */
+/* #90C8F8 */
+/* #225078 */
+
+
+
+/* #containerMappaStatoSegnalazioni{display:none;} */
+
+/* html{background-color: #225078;} */
+
+
+/*tag*/
+tBody{font-size: 12px;font-weight: normal;}
+
+
+/*Generici*/
+*{margin:0px;pading:0px;}
+.textAlignCenter{text-align: center;}
+.textAlignRight{text-align: right;}
+.textAlignLeft{text-align: left;}
+.paddingLeft15px{padding-left: 15px;}
+.padding20px15px{padding: 20px 15px !important;}
+.padding15px{padding: 15px !important;}
+.padding5px{padding:5px;}
+.displayNone{display: none;}
+.displayBlock{display: block;}
+.displayInlineBlock{display: inline-block;}
+.floatLeft{float:left;}
+.floatRight{float:right;}
+.width75px{width:75px}
+.width45perc{width:45%}
+.width100px{width:100px}
+.width165px{width:165px}
+.width10perc{width:10%}
+.width90perc{width:90% !important}
+.width100perc{width:100% !important}
+.padding15px0px{padding: 15px 0px;}
+.paddingTop15px{padding-top: 15px;}
+.padding0px15px{padding: 0px 15px;}
+.marginBottom15px{margin-bottom: 15px;}
+.marginTop15px{margin-top: 15px;}
+.marginTop5px{margin-top: 5px;}
+.marginRight5px{margin-right: 5px;}
+.marginTop20px{margin-top: 20px;}
+.marginTop20perc{margin-top: 20%;}
+.marginBottom{margin-bottom: 20px;}
+.minHeight200{/*min-height: 200px; !important*/}
+.minHeight300{min-height: 300px;}
+.minHeight400{min-height: 400px;}
+.colorBlack{color: black;}
+.coloOrangeCite{color: rgb(234, 90, 37);}
+.bgColoOrangeCite{background-color: rgb(234, 90, 37);}
+.zIndexO{z-index: 1 !important;}
+.zIndex100000{z-index: 100000 !important;}
+.overflow{overflow: auto;}
+.overflowAuto{overflow: auto;}
+.cursorPointer{cursor:pointer}
+.height100px{height: 100px}
+.height186px{height: 186px}
+.height200px{height: 200px}
+.height300px{height: 300px}
+.height430px{height: 430px}
+.height420px{height: 420px}
+.height410px{height: 410px}
+.height400px{height: 400px}
+.height390px{height: 390px}
+.height380px{height: 380px}
+.icoInfo{background: url('../img/info.png'); display:inline-block;width:16px; height:16px; cursor:pointer;background-size: cover;background-repeat: no-repeat; margin-right: 5px; margin-bottom: -3px;}
+.fontSize8px{font-size: 8px;}
+.fontSize9px{font-size: 9px;}
+.fontSize10px{font-size: 10px;}
+.containerLoading {background-color: rgba(0, 0, 0, 0.4);background: rgba(0, 0, 0, 0.4);-webkit-border-radius: 5px;border-radius: 0px;-moz-border-radius: 0px;display: block;-moz-border-radius: 5px;width: 100%;height: 100%;}
+.containerMask{position: absolute;top: 0px;right: 0;width: 100%;height: 100%;padding-right: 15px;padding-left: 15px;padding-bottom: 15px;}
+/*.loaderLogo {background: url('../img/load.gif');width: 125px;height: 120px;top: 25%;position: absolute;left: 50%;margin-left: -120px;background-size: cover;background-size: 100% 100;}*/
+.overflowAuto{overflow: auto;}
+.logo_murena{background-image: url(../img/CITELUM_LOGO_SVG.svg);width: 150px;background-size: 100% 100%;background-repeat: no-repeat; margin-top: 3px; margin-left: 10px !important; margin-bottom:3px; height: 38px;}
+.logo_vivonapoli{background-image: url(../img/vivonapoli.jpg);width: 150px;background-size: 100% 100%;background-repeat: no-repeat; margin-top: 3px; margin-left: 10px !important; margin-bottom:3px; height: 38px;}
+
+.positionFixed{position: fixed; }
+
+.borderRadiousTop5{-webkit-border-top-left-radius: 5px;-webkit-border-top-right-radius: 5px;-moz-border-radius-topleft: 5px;-moz-border-radius-topright: 5px;border-top-left-radius: 5px;border-top-right-radius: 5px;}
+
+.containerLogoSquadra{display:block; width:75px; height:auto;}
+.footerBar { width: 100%;padding:3%;color: whitesmoke;}
+.dataTable th{ text-align: center; }
+.loaderLogo {
+	background: url(../img/logoLoad.svg);
+	width: 100px;
+	height: 100px;
+  /*top: 40%;*/
+  top: 15%;
+	position: relative;
+	left: 50%;
+	margin-left: -50px;
+	background-size: cover;
+	transform-origin: center center;
+	-webkit-transform-origin: center center;
+	animation: spin 1s infinite linear;
+	-webkit-animation: spin 1s infinite linear;
+}
+
+.cardRecap{display: block;text-align: left;height: 110px;overflow: auto;border: 1px solid darkgrey;padding: 15px;}
+
+.padding10px15px{padding: 10px 15px;}
+
+.gb-darkslategrey{background: darkslategrey;}
+
+.backgroundColorDarkslategrey{/*background-color: darkslategrey;*/}
+
+.leftSideBar{}
+
+.containerInfoWindow{
+  display: block;
+  min-width: 200px;
+  min-height: 150px;
+}
+
+.card {box-shadow:0 2px 4px 0 rgba(0,0,0,0.1);transition: 0.3s; margin-bottom: 15px; background-color: white;}
+.card:hover {box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);}
+.containerCard {padding: 2px 16px;}
+
+.containerMuseWeb{width:100%; height: 820px; border: 0px;}
+
+.bg-white{background-color: white !important;}
+
+/*login*/
+.backGround {
+  background: url('../img/bg1.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.backGroundDSH {
+  background: url('../img/bg2.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+@-webkit-keyframes rays {
+    from {
+    	transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+    	transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/*left nab bar*/
+.navbar-fixed-left {
+  width: 140px;
+  position: fixed;
+  border-radius: 0;
+  height: 100%;
+}
+
+.navbar-fixed-left .navbar-nav > li {
+  float: none;  /* Cancel default li float: left */
+  width: 139px;
+}
+
+.navbar-fixed-left + .container {
+  padding-left: 160px;
+}
+
+/* On using dropdown menu (To right shift popuped) */
+.navbar-fixed-left .navbar-nav > li > .dropdown-menu {
+  margin-top: -50px;
+  margin-left: 140px;
+}
+
+
+.formImportCSV{
+    width: 100%;
+    height: 200px;
+  /*  border: 2px dashed #337AB7;*/
+	padding:15px;
+	margin-bottom:15px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+.formImportCSV p{
+	position:relative;
+	width: 100%;
+	height: 200px;
+	text-align: center;
+	line-height: 170px;
+	font-family: Arial;
+}
+.formImportCSV input{
+	background: url('../img/drag.png');
+	background-position:center;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 175px;
+	outline: none;
+    background-repeat: no-repeat;
+    background-size: 140px;
+}
+
+.anteprimaConsumiCSV{display: block; height: 200px; overflow: auto;}
+.tableCSVAnteprima{margin-top: 10px;width:100%;}
+.theadCSVAnteprima{background-color: cornflowerblue; border: 1px solid black;color: whitesmoke;}
+.tbodyCSVAnteprima{/*height: 350px;display: inline-block;width: 100%;overflow: auto;*/}
+.tbodyCSVAnteprima .tdCSVAnteprima,  theadCSVAnteprima .thCSVAnteprima{padding:3px 5px;}
+
+.openModalImportConsumiCSVLink{display:none;}
+@media (max-width: 768px) {
+	.leftSideBar{display:none;}
+	.openModalImportConsumiCSVLink{display:block;}
+}
+
+.bodyListPanelContainer{overflow: auto; height: 358px;}
+
+
+.panel-actions {margin-top: -20px;margin-bottom: 0;text-align: right;}
+.panel-actions a {color:#333;}
+.panel-fullscreen {display: block;z-index: 9999;position: fixed;width: 100%;height: 100%;top: 0;right: 0;left: 0;bottom: 0;overflow: auto;}
+
+
+.containerGraficiConsumo {
+  margin: 0 auto;
+  padding: 0px 30px;
+  width: 80%;
+  color: #333;
+  background: #419be0;
+}
+
+.slick-slide {
+  text-align: center;
+  background: white;
+}
+
+.navBarLeft, .navBarLeft li{
+  width: 100%;
+  display: block;
+  text-align: left;
+}
+
+@media (max-width: 768px){
+  .navBarLeft{display:none;}
+}  
+.icoDSHmenu{display:block;width:24px; height:24px; background-size: cover;background-repeat: no-repeat;}
+.icoMap {background: url(../img/mapIco.png);display: inline-block; width: 16px;height: 16px;cursor: pointer;background-size: cover;background-repeat: no-repeat;margin-right: 5px;margin-bottom: -3px;}
+.icoMuse {background: url(../img/muse-blu.png);display: inline-block;width: 16px;height: 16px;cursor: pointer;background-size: cover;background-repeat: no-repeat;margin-right: 5px;margin-bottom: -3px;}
+
+.borderBotPadd{border-bottom: 1px solid lightgrey;padding-bottom: 15px;}
+
+.block-update-card {
+  height: 100%;
+  border: 1px #FFFFFF solid;
+  width: 380px;
+  float: left;
+  margin-left: 10px;
+  margin-top: 0;
+  padding: 0;
+  box-shadow: 1px 1px 8px #d8d8d8;
+  background-color: #FFFFFF;
+}
+.block-update-card .h-status {
+  width: 100%;
+  height: 7px;
+  background: repeating-linear-gradient(45deg, #606dbc, #606dbc 10px, #465298 10px, #465298 20px);
+}
+.block-update-card .v-status {
+  width: 5px;
+  height: 80px;
+  float: left;
+  margin-right: 5px;
+  background: repeating-linear-gradient(45deg, #606dbc, #606dbc 10px, #465298 10px, #465298 20px);
+}
+.block-update-card .update-card-MDimentions {
+  width: 80px;
+  height: 80px;
+}
+.block-update-card .update-card-body {
+  margin-top: 10px;
+  margin-left: 5px;
+}
+.block-update-card .update-card-body h4 {
+  color: #737373;
+  font-weight: bold;
+  font-size: 13px;
+}
+.block-update-card .update-card-body p {
+  color: #737373;
+  font-size: 12px;
+}
+.block-update-card .card-action-pellet {
+  padding: 5px;
+}
+.block-update-card .card-action-pellet div {
+  margin-right: 10px;
+  font-size: 15px;
+  cursor: pointer;
+  color: #dddddd;
+}
+.block-update-card .card-action-pellet div:hover {
+  color: #999999;
+}
+.block-update-card .card-bottom-status {
+  color: #a9a9aa;
+  font-weight: bold;
+  font-size: 14px;
+  border-top: #e0e0e0 1px solid;
+  padding-top: 5px;
+  margin: 0px;
+}
+.block-update-card .card-bottom-status:hover {
+  background-color: #dd4b39;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+/*
+Creating a block for social media buttons
+*/
+.card-body-social {
+  font-size: 30px;
+  margin-top: 10px;
+}
+.card-body-social .git {
+  color: black;
+  cursor: pointer;
+  margin-left: 10px;
+}
+.card-body-social .twitter {
+  color: #19C4FF;
+  cursor: pointer;
+  margin-left: 10px;
+}
+.card-body-social .google-plus {
+  color: #DD4B39;
+  cursor: pointer;
+  margin-left: 10px;
+}
+.card-body-social .facebook {
+  color: #49649F;
+  cursor: pointer;
+  margin-left: 10px;
+}
+.card-body-social .linkedin {
+  color: #007BB6;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.music-card {
+  background-color: green;
+}

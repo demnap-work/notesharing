@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>NoteSharing</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Giuseppe De Martino">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+
+
+  <script src="js/tp/jquery.min.js"></script>
+
+	<script src="js/tp/angular.min.js"></script>
+	<script src="js/tp/angular-route.js"></script>
+	<script src="js/tp/angular-ui-router.js"></script>
+
+	<script src="js/main.js"></script>
+	<script src="js/bundle/bundle.js"></script>
+	<script src="js/bundle/bundleRequest.js"></script>
+	<script src="js/bundle/domTree.js"></script>
+  
+	<script src="js/factories/queryFactory.js"></script>
+	<script src="js/factories/utilitiesFactory.js"></script>
+	<script src="js/factories/HTTPFactory.js"></script>
+
+	<script src="js/controller/serviceNote.js"></script>
+
+  <script src="js/controller/checkSessionController.js"></script>
+	<script src="js/controller/loginController.js"></script>
+	<script src="js/controller/userController.js"></script>
+	<script src="js/controller/dashboardController.js"></script>
+	<script src="js/controller/noteController.js"></script>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/postitStyle.css">
+
+</head>
+<body ng-app="mainApp" id="bodyNoteSharing" ng-controller="checkSessionController" ng-init="checkSession()" class="bg-light" >
+
+  <div id="formRegistrazione" ng-controller="userController" class="container mt-5 d-flex align-items-center justify-content-center vh-100 d-none">
+    <form class="p-4 card shadow ">
+      <h2 class="text-center mb-4">NoteSharing</h2>
+      <hr>
+      <h4 class="mb-4">Registrazione nuovo utente</h4>
+      
+      <div class="mb-3">
+        <input type="text" class="form-control" id="username" placeholder="Username" name="username" required minlength="5" maxlength="10">
+        <div class="form-text text-muted fs-6"><em>compresa tra 5 e 10 caratteri</em></div>
+      </div>
+      
+      
+      <div class="mb-3">
+        <input type="password" class="form-control" id="password" placeholder="Password" name="password" required pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,15}$">
+        <div class="form-text text-muted"><em>Lunghezza tra 5 e 15 caratteri e deve contenere lettere e numeri</em></div>
+      </div>
+      
+       
+      <div class="mb-3">
+        <input type="password" class="form-control" placeholder="Ripeti password" id="password2" name="password2" required>
+        <div class="form-text text-muted"><em>Ripeti la password</em></div>
+      </div>
+      
+       <div class="row mb-3">
+          <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary" ng-click="addNewUser()">Registrati</button>
+            <button type="button" class="btn btn-secondary" ng-click="showLogin()">Torna al login</button>
+          </div>
+       </div>
+    </form>
+  </div>
+
+  <div id="formLogin" class="bg-light d-flex align-items-center justify-content-center vh-100 d-none">
+    <div class="p-4 card shadow" style="max-width: 400px; width: 100%;">
+      <h2 class="text-center mb-4">NoteSharing</h2>
+      <hr>
+      <h4 class="mb-4">Accedi</h4>
+      <form ng-controller="loginController">
+        <div class="mb-3">
+          <input type="text" class="form-control" id="user" placeholder="Inserisci username" required>
+        </div>
+        
+        <div class="mb-3">
+          <input type="password" class="form-control" id="pwd" placeholder="Inserisci password" required>
+        </div>
+        
+        <div class="d-flex justify-content-between">
+          <button type="submit" class="btn btn-primary" ng-click="login()">Accedi</button>
+          <button type="button" class="btn btn-secondary" ng-click="showRegistrazione()">Registra</button>
+        </div>
+      </form>
+    </div>
+  </div>
+    
+  <div id="mainDashboard" ng-controller="dashboardController" ng-init="initNote()">
+    <div class="d-flex vh-100">
+      <nav class="flex-shrink-0 p-3 bg-dark text-white" style="width: 250px;">
+        
+        <div class="d-flex align-items-center mb-3">
+          <div id="icoUser" class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fs-4 me-2" style="width: 40px; height: 40px;"> </div>
+          <a href="#" class="d-block text-white text-decoration-none fs-4 m-0">NoteSharing</a>
+        </div>
+        <ul class="nav nav-pills flex-column">
+          <li class="nav-item">
+            <a href="#" class="nav-link text-white" data-bs-toggle="modal" ng-click="openEditorNota()" data-bs-target="#nuovaNotaModal">Aggiungi nuova note</a>
+          </li>
+          <li class="nav-item" >
+            <a href="#" ng-click="logout()" class="nav-link text-white">Esci</a>
+          </li>
+        </ul>
+      </nav>
+      <main class="flex-grow-1 p-3 overflow-auto">
+          <h2>Notes</h2>
+          <div class="mb-3">
+            <input type="text" id="cercaTagsText" ng-keyup="searchTag()" ng-model="tagsText" class="form-control" placeholder="Cerca per tag...">
+          </div>
+
+          <div id="containerNotePostit">
+
+          </div>
+
+          <div id="containerCardNote" class="row g-3">
+            <div class="col-md-3 col-lg-2">
+                <div class="card">
+                  <div class="card-body">
+
+                  </div>
+                </div>
+            </div>
+            
+          </div>
+      </main>
+    </div>
+
+  </div>
+  
+
+  <div class="modal fade" id="shareNotaModal" ng-controller="noteController" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongShareTitle">Condividi nota <span id="idNotaShared"></span></h5>
+        </div>
+        <div class="modal-body">
+          <div id="listUsers">
+            
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+          <button type="button" class="btn btn-primary" ng-click="shareNota()">Condividi</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="deleteNotaModal" ng-controller="noteController" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongDeleteTitle">Elimina nota</h5>
+        </div>
+        <div class="modal-body">
+            Sei sicuro di voler eliminare la nota <span id="idNotaDel"></span>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+          <button type="button" class="btn btn-primary" ng-click="deleteNota()">Conferma</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="nuovaNotaModal" ng-controller="noteController" ng-init="initEditor()" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><span id="exampleModalLongTitle">Editor nota</span> <span id="idNotaModify"></span></h5>
+        </div>
+        <div class="modal-body">
+            <!-- Toolbar -->
+            <div id="toolbar">
+              <span class="ql-formats">
+                <select class="ql-font"></select>
+                <select class="ql-size"></select>
+              </span>
+              <span class="ql-formats">
+                <button class="ql-bold"></button>
+                <button class="ql-italic"></button>
+                <button class="ql-underline"></button>
+                <button class="ql-strike"></button>
+              </span>
+              <span class="ql-formats">
+                <select class="ql-color"></select>
+                <select class="ql-background"></select>
+              </span>
+              <span class="ql-formats">
+                <button class="ql-script" value="sub"></button>
+                <button class="ql-script" value="super"></button>
+              </span>
+              <span class="ql-formats">
+                <button class="ql-header" value="1"></button>
+                <button class="ql-header" value="2"></button>
+                <button class="ql-blockquote"></button>
+                <button class="ql-code-block"></button>
+              </span>
+              <span class="ql-formats">
+                <button class="ql-list" value="ordered"></button>
+                <button class="ql-list" value="bullet"></button>
+                <button class="ql-indent" value="-1"></button>
+                <button class="ql-indent" value="+1"></button>
+              </span>
+              <span class="ql-formats">
+                <button class="ql-direction" value="rtl"></button>
+                <select class="ql-align"></select>
+              </span>
+              <span class="ql-formats">
+                <button class="ql-clean"></button>
+              </span>
+            </div>
+            <!-- 
+
+              <div id="toolbar">
+                <select class="ql-header">
+                  <option value="1"></option>
+                  <option value="2"></option>
+                  <option selected></option>
+                </select>
+                <button class="ql-bold"></button>
+                <button class="ql-italic"></button>
+                <button class="ql-underline"></button>
+                <button class="ql-strike"></button>
+                <button class="ql-list" value="ordered"></button>
+                <button class="ql-list" value="bullet"></button>
+                <button class="ql-link"></button>
+              </div>
+            -->
+            <div id="editor-container" style="height:250px; overflow: auto;"></div>
+            <input class="mt-3" style="width:100%;" type="text" id="tags" placeholder="tags" required>
+          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+          <button type="button" id="salvaNotaButton" class="btn btn-primary" ng-click="salvaNota()">Salva nota</button>
+          <button type="button" id="modificaNotaButton" class="btn btn-primary" ng-click="updateNote()">Modifica nota</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="modalMessage" tabindex="-1" aria-labelledby="headerMessage" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content p-3">
+        <div class="modal-header">
+          <h5 class="modal-title" id="headerMessage"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
+        </div>
+        <div class="modal-body" id="textMessage"></div>
+      </div>
+    </div>
+  </div>
+
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>
+   
+</body>
+</html>

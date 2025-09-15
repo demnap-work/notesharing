@@ -1,0 +1,7 @@
+[machinelearn]
+curl -X POST -d "idDocument=22" 172.16.2.49:5050/api/api/getTextDocument
+
+
+
+[localhost]
+curl -X POST -d "idDocument=22" 172.16.0.111:5050/api/api/getTextDocumentS

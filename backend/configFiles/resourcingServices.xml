@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resourcing>
+
+    <resource path="/api/checkTokenAlive" method="GET" classNameController="TokenController" methodController="checkTokenAlive" >
+        <header name="token" required="true"/>
+    </resource>
+
+    <resource path="/api/login" method="POST" classNameController="UserController" methodController="login" >
+        <param name="user"  type="string"   required="true" />
+        <param name="pwd"   type="string"   required="true" />
+    </resource>
+
+    <resource path="/api/logout" method="GET" classNameController="UserController" methodController="logout" >
+        <header name="token" required="true"/>
+    </resource>
+
+    <resource path="/api/addUser" method="POST" classNameController="UserController" methodController="addUser" >
+        <param name="user"  type="string"   required="true" />
+        <param name="pwd"   type="string"   required="true" />
+        <param name="pwd2"  type="string"   required="true" />
+    </resource>
+
+    <resource path="/api/getAllUsers" method="POST" classNameController="UserController" methodController="getAllUsers" >
+        <header name="token" required="true"/>
+    </resource>
+    
+
+    <resource path="/api/insertNota" method="POST" classNameController="NoteController" methodController="insertNota" >
+        <header name="token" required="true"                    />
+        <param  name="nota"  type="string"   required="true"    />
+        <param  name="tags"  type="string"   required="false"   />
+    </resource>
+
+    <resource path="/api/sharedNota" method="POST" classNameController="NoteController" methodController="sharedNota" >
+        <header name="token"    required="true"                     />
+        <param  name="idNota"   type="string"    required="true"    />
+        <param  name="idUser"   type="string"    required="true"    />
+    </resource>
+
+    <resource path="/api/getAllNotes" method="GET" classNameController="NoteController" methodController="getNotesSharedByIDUser" >
+        <header name="token"    required="true" />
+    </resource>
+
+    <resource path="/api/updateNote" method="POST" classNameController="NoteController" methodController="updateNote" >
+        <header name="token"        required="true"                     />
+        <param  name="notaNuova"    type="string"   required="true"     />
+        <param  name="idNota"       type="int"      required="true"     />
+        <param  name="tags"         type="string"   required="false"    />
+    </resource>
+
+    <resource path="/api/removeNote" method="POST" classNameController="NoteController" methodController="removeNote" >
+        <header name="token"        required="true"                     />
+        <param  name="idNota"       type="int"      required="true"     />
+    </resource>
+
+
+
+</resourcing>
