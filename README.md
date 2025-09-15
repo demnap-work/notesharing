@@ -10,7 +10,7 @@
 ## 🚀 Avvio Backend
 
 ### 1. Clonare il repository
-Clonare il progetto backend da GitHub (URL sarà fornito in seguito):
+Clonare il progetto backend da GitHub https://github.com/demnap-work/notesharing/tree/main/backend:
 ```bash
 git clone <URL_REPO_BACKEND>
 cd <NOME_FOLDER_BACKEND>
@@ -79,7 +79,7 @@ http://0.0.0.0:5050
 ## 🌐 Avvio Frontend
 
 ### 1. Clonare il repository
-Clonare il progetto frontend da GitHub (URL sarà fornito in seguito).
+Clonare il progetto frontend da GitHub https://github.com/demnap-work/notesharing/tree/main/frontend.
 
 ### 2. Avviare con Simple Web Server
 - Scaricare e avviare il tool **Simple Web Server**.  
