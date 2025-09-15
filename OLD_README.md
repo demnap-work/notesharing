@@ -58,17 +58,7 @@ dbDefault=notesharingDBMS
 
 ---
 
-### 4. Creazione database e dati di test
-All’interno della repository (URL sarà fornito in seguito) sono presenti gli script SQL con gli statement per la creazione delle basi di dati e alcuni dati di esempio per i test.  
-
-L’ordine corretto di caricamento è il seguente:
-1. **users**
-2. **notes**
-3. **notesharing**
-4. **tokens**
----
-
-### 5. Avvio del backend
+### 4. Avvio del backend
 Spostarsi nella cartella dove è presente il file `__init__.py` ed eseguire:
 
 ```bash
