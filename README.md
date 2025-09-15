@@ -59,7 +59,7 @@ dbDefault=notesharingDBMS
 ---
 
 ### 4. Creazione database e dati di test
-All’interno della repository (URL sarà fornito in seguito) sono presenti gli script SQL con gli statement per la creazione delle basi di dati e alcuni dati di esempio per i test.  
+All’interno della repository https://github.com/demnap-work/notesharing/tree/main/schemaDB sono presenti gli script SQL con gli statement per la creazione delle basi di dati e alcuni dati di esempio per i test.  
 
 L’ordine corretto di caricamento è il seguente:
 1. **users**
